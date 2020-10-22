@@ -11,7 +11,7 @@
  * Model specific registers (MSRs) by the module.
  * See SDM volume 4, section 2.1
  */
-#define IA32_VMX_PINBASED_CTLS	0x481
+#define IA32_VMX_PINBASED_CTLS 0x481
 #define IA32_VMX_PROCBASED_CTLS 0x482
 
 /*
