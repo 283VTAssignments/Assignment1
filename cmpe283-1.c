@@ -15,6 +15,7 @@
 #define IA32_VMX_PROCBASED_CTLS 0x482
 #define IA32_VMX_PROCBASED_CTLS2 0x48B
 #define IA32_VMX_EXIT_CTLS 0x483
+#define IA32_VMX_ENTRY_CTLS 0x484
 
 
 /*
@@ -99,11 +100,11 @@ struct capability_info procbased2[27] =
     { 19, "Conceal VMX From PT" },
     { 20, "Enable XSAVES/XRSTORS" },
     { 22, "Mode-based Execution Control for EPT" },
-    { 23, "Sub-page write permissions for EPT" },
-    { 24, "Intel PT uses guest physical addresses" },
-    { 25, "Use TSC Scaling" },
-    { 26, "Enable user wait and pause" },
-    { 28, "Enable ENCLV exiting" }
+	{ 23, "Sub-page write permissions for EPT" },
+	{ 24, "Intel PT uses guest physical addresses" },
+	{ 25, "Use TSC Scaling" },
+	{ 26, "Enable user wait and pause" },
+	{ 28, "Enable ENCLV exiting" }
 };
 
 /*
@@ -123,9 +124,29 @@ struct capability_info vm_exit[14] =
     { 22, "Save VMX Preemption Timer Value" },
     { 23, "Clear IA32_BNDCFGS" },
     { 24, "Conceal VMX from PT" },
-    { 25, "Clear IA32_RTIT_CTL" },
-    { 28, "Load CET	state" },
-    { 29, "Load PKRS" },
+	{ 25, "Clear IA32_RTIT_CTL" },
+	{ 28, "Load CET	state" },
+	{ 29, "Load PKRS" },
+};
+
+/*
+ * VM-Entry capabilities
+ * SDM vol3, section 24.8.1
+ */
+struct capability_info vm_entry[12] =
+{
+    { 2, "Load Debug Controls" },
+    { 9, "IA-32e mode guest" },
+    { 10, "Entry to SMM" },
+    { 11, "Deactivate dual-monitor treatment" },
+    { 13, "Load IA32_PERF_GLOBAL_CTRL" },
+    { 14, "Load IA32_PAT" },
+    { 15, "Load IA32_EFER" },
+    { 16, "Clear IA32_BNDCFGS" },
+    { 17, "Conceal VMX from PT" },
+	{ 18, "Load IA32_RTIT_CTL" },
+	{ 20, "Load CET State" },
+	{ 22, "Load PKRS" }
 };
 
 /*
@@ -188,11 +209,17 @@ detect_vmx_features(void)
 		(uint64_t)(lo | (uint64_t)hi << 32));
 	report_capability(procbased2, 27, lo, hi);
 
-	/* Exit controls */
+	/* VM-Exit controls */
 	rdmsr(IA32_VMX_EXIT_CTLS, lo, hi);
 	pr_info("Exit Controls MSR: 0x%llx\n",
 	(uint64_t)(lo | (uint64_t)hi << 32));
 	report_capability(vm_exit, 14, lo, hi);
+	
+	 /* VM-Entry controls */
+	rdmsr(IA32_VMX_ENTRY_CTLS, lo, hi);
+	pr_info("Entry Controls MSR: 0x%llx\n",
+	(uint64_t)(lo | (uint64_t)hi << 32));
+	report_capability(vm_entry, 12, lo, hi);
 }
 
 /*
@@ -226,3 +253,4 @@ cleanup_module(void)
 {
 	printk(KERN_INFO "CMPE 283 Assignment 1 Module Exits\n");
 }
+
