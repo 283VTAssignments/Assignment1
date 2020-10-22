@@ -11,8 +11,9 @@
  * Model specific registers (MSRs) by the module.
  * See SDM volume 4, section 2.1
  */
-#define IA32_VMX_PINBASED_CTLS 0x481
+#define IA32_VMX_PINBASED_CTLS	0x481
 #define IA32_VMX_PROCBASED_CTLS 0x482
+#define IA32_VMX_PROCBASED_CTLS2 0x48B
 
 /*
  * struct caapability_info
@@ -40,7 +41,7 @@ struct capability_info pinbased[5] =
 };
 
 /*
- * Procbased capabilities
+ * Primary Procbased capabilities
  * SDM vol3, section 24.6.2
  */
 struct capability_info procbased[21] =
@@ -66,6 +67,41 @@ struct capability_info procbased[21] =
     { 29, "MONITOR Exiting" },
     { 30, "PAUSE Exiting" },
     { 31, "Activate Secondary Controls" }
+};
+
+/*
+ * Secondary Procbased capabilities
+ * SDM vol3, section 24.6.2
+ */
+struct capability_info procbased2[27] =
+{
+    { 0, "Virtualize APIC Accesses" },
+    { 1, "Enable EPT" },
+    { 2, "Descriptor-table Exiting" },
+    { 3, "Enable RDTSCP" },
+    { 4, "Virtualize x2APIC Mode" },
+    { 5, "Enable VPID" },
+    { 6, "WBINVD Exiting" },
+    { 7, "Unrestricted Guest" },
+    { 8, "APIC-register Virtualization" },
+    { 9, "Virtual-interrupt Delivery" },
+    { 10, "PAUSE-loop Exiting" },
+    { 11, "RDRAND Exiting" },
+    { 12, "Enable INVPCID" },
+    { 13, "Enable VM Functions" },
+    { 14, "VMCS Shadowing" },
+    { 15, "Enable ENCLS Exiting" },
+    { 16, "RDSEED Exiting" },
+    { 17, "Enable PML" },
+    { 18, "EPT-violation #VE" },
+    { 19, "Conceal VMX From PT" },
+    { 20, "Enable XSAVES/XRSTORS" },
+    { 22, "Mode-based Execution Control for EPT" },
+    { 23, "Sub-page write permissions for EPT" },
+    { 24, "Intel PT uses guest physical addresses" },
+    { 25, "Use TSC Scaling" },
+    { 26, "Enable user wait and pause" },
+    { 28, "Enable ENCLV exiting" }
 };
 
 /*
@@ -116,11 +152,17 @@ detect_vmx_features(void)
 		(uint64_t)(lo | (uint64_t)hi << 32));
 	report_capability(pinbased, 5, lo, hi);
 
-	/* Procbased controls */
+	/* Primary Procbased controls */
 	rdmsr(IA32_VMX_PROCBASED_CTLS, lo, hi);
-	pr_info("Procbased Controls MSR: 0x%llx\n",
+	pr_info("Primary Procbased Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
 	report_capability(procbased, 21, lo, hi);
+
+	/* Secondary Procbased controls */
+	rdmsr(IA32_VMX_PROCBASED_CTLS2, lo, hi);
+	pr_info(" Secondary Procbased Controls MSR: 0x%llx\n",
+		(uint64_t)(lo | (uint64_t)hi << 32));
+	report_capability(procbased2, 27, lo, hi);
 }
 
 /*
@@ -154,3 +196,4 @@ cleanup_module(void)
 {
 	printk(KERN_INFO "CMPE 283 Assignment 1 Module Exits\n");
 }
+
