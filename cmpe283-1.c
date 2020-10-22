@@ -100,11 +100,11 @@ struct capability_info procbased2[27] =
     { 19, "Conceal VMX From PT" },
     { 20, "Enable XSAVES/XRSTORS" },
     { 22, "Mode-based Execution Control for EPT" },
-	{ 23, "Sub-page write permissions for EPT" },
-	{ 24, "Intel PT uses guest physical addresses" },
-	{ 25, "Use TSC Scaling" },
-	{ 26, "Enable user wait and pause" },
-	{ 28, "Enable ENCLV exiting" }
+    { 23, "Sub-page write permissions for EPT" },
+    { 24, "Intel PT uses guest physical addresses" },
+    { 25, "Use TSC Scaling" },
+    { 26, "Enable user wait and pause" },
+    { 28, "Enable ENCLV exiting" }
 };
 
 /*
@@ -124,9 +124,9 @@ struct capability_info vm_exit[14] =
     { 22, "Save VMX Preemption Timer Value" },
     { 23, "Clear IA32_BNDCFGS" },
     { 24, "Conceal VMX from PT" },
-	{ 25, "Clear IA32_RTIT_CTL" },
-	{ 28, "Load CET	state" },
-	{ 29, "Load PKRS" },
+    { 25, "Clear IA32_RTIT_CTL" },
+    { 28, "Load CET state" },
+    { 29, "Load PKRS" },
 };
 
 /*
@@ -144,9 +144,9 @@ struct capability_info vm_entry[12] =
     { 15, "Load IA32_EFER" },
     { 16, "Clear IA32_BNDCFGS" },
     { 17, "Conceal VMX from PT" },
-	{ 18, "Load IA32_RTIT_CTL" },
-	{ 20, "Load CET State" },
-	{ 22, "Load PKRS" }
+    { 18, "Load IA32_RTIT_CTL" },
+    { 20, "Load CET State" },
+    { 22, "Load PKRS" }
 };
 
 /*
