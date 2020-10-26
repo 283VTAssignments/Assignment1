@@ -1,20 +1,21 @@
 # Assignment1
 
-Q1.
+## Q1.
 
-Team members:
-  Mamatha Guntu
-  Arshia Sali
+## Team members:
+  - Mamatha Guntu
+  - Arshia Sali
   
-Contribution: We divided the MSR controls , took 2 each , coded and executed on our own VMs and later merged it in Git.
+### Contribution: 
+  We divided the MSR controls , took 2 each , coded and executed on our own VMs and later merged it in Git.
 
-  Mamatha Guntu- Created VM, referred SDM for MSR controls - Primary ProcBased and VM-Exit controls. Coded and executed the code for them.
+  - Mamatha Guntu- Created VM, referred SDM for MSR controls - Primary ProcBased and VM-Exit controls. Coded and executed the code for them.
   
-  Arshia Sali - Created VM, referred SDM for MSR controls - Secondary ProcBased and VM-Entry controls. Coded and executed the code for them.
+  - Arshia Sali - Created VM, referred SDM for MSR controls - Secondary ProcBased and VM-Entry controls. Coded and executed the code for them.
 
-Q2.
+## Q2.
 
-Procedure
+### Procedure
 1. Install VMWARE WORKSTATION 16 PRO
 2. Created a VM with Ubuntu 20.04.1-desktop ISO image file
 3. Copy make and cmpe283-1.c file to the outer VM local folder 
